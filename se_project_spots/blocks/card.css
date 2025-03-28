@@ -1,0 +1,79 @@
+.card {
+  margin: 0;
+  padding: 0;
+  max-width: 413px;
+}
+
+.card__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card__title {
+  margin-top: 12px;
+  margin-bottom: 0;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 120%;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.card__image {
+  display: block;
+  height: 413px;
+  width: 413px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.card__like-btn {
+  background-color: transparent;
+  border: none;
+  background-image: url(../images/Like\ Icon.svg);
+  width: 23px;
+  height: 20px;
+  opacity: 0.4;
+}
+
+.card__like-btn:hover {
+  opacity: 1;
+}
+
+@media screen and (max-width: 627px) {
+  .card {
+    flex-direction: column;
+    max-width: 413px;
+    grid-template-columns: repeat(auto-fit, 288px);
+  }
+
+  .card__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card__title {
+    font-size: 16px;
+  }
+
+  .card__image {
+    display: block;
+    height: 288px;
+    width: 288px;
+    object-fit: cover;
+  }
+
+  .card__like-btn {
+    background-color: transparent;
+    border: none;
+    background-image: url(../images/Like\ Icon@2x.svg);
+    width: 20px;
+    height: 18px;
+    background-size: cover;
+  }
+}
