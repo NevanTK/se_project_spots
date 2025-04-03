@@ -1,0 +1,25 @@
+.post {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+.post__list {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 413px);
+  list-style-type: none;
+  justify-content: center;
+  gap: 40px 20px;
+}
+
+@media screen and (max-width: 627px) {
+  .post__list {
+    /* flex-direction: column; */
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, 288px);
+  }
+  .post {
+    padding-bottom: 20px;
+  }
+}
