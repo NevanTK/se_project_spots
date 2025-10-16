@@ -46,6 +46,13 @@ const api = new Api({
   },
 });
 
+const testApi = new Api({
+  baseUrl: 'https://jsonplaceholder.typicode.com',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
 api
   .getAppInfo()
   .then(([cards]) => {
