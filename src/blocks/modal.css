@@ -39,6 +39,13 @@
   background-color: #fff;
 }
 
+/* #delete-modal .modal__container {
+  display: flex;
+  padding: 24px 32px;
+  width: 630px;
+  height: 172px;
+} */
+
 .modal__post-container {
   position: relative;
   align-self: center;
@@ -167,8 +174,14 @@
   border-radius: 8px;
 }
 
-.modal__save-btn_type_disabled {
-  opacity: 0.5;
+.modal__save-btn #confirm {
+  background-color: rgba(255, 0, 0, 1);
+}
+
+.modal__save-btn #cancel {
+  margin-right: 16px;
+  background-color: rgba(33, 33, 33, 0.1);
+  color: rgba(33, 33, 33, 1);
 }
 
 .modal__save-btn:hover {
