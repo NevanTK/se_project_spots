@@ -50,7 +50,7 @@ const api = new Api({
 //destructure second item in call back of .then()
 api
   .getAppInfo()
-  .then(([cards]) => {
+  .then(([cards, userData]) => {
     cards.forEach((item) => {
       const postElement = getCardElement(item);
       postList.append(postElement);
@@ -59,11 +59,9 @@ api
     //set src of avatr img
     //set text conttent of both text elements
 
-    getUserInfo().then((userData) => {
-      profileimgEl.src = userData.avatar;
-      profileNameEl.textContent = userData.name;
-      profiledescriptionEl.textContent = userData.about;
-    });
+    profileimgEl.src = userData.avatar;
+    profileNameEl.textContent = userData.name;
+    profiledescriptionEl.textContent = userData.about;
   })
   .catch(console.error);
 
@@ -142,6 +140,11 @@ function getCardElement(data) {
   postTitleEl.alt = data.name;
   postTitleEl.textContent = data.name;
 
+  const likeBtnEl = postElement.querySelector('.card__like-btn');
+  likeBtnEl.addEventListener('click', () => {
+    likeBtnEl.classList.toggle('card__like-btn_active');
+  });
+
   api.getUserInfo().then((userData) => {
     if (data.likes.some((like) => like._id === userData._id)) {
       const likeBtnEl = postElement.querySelector('.card__like-btn');
@@ -154,6 +157,7 @@ function getCardElement(data) {
   });
 
   //like card
+
   function handleLikeCard(evt, id) {
     if (evt.target.classList.contains('card__like-btn_active')) {
       api
@@ -171,18 +175,35 @@ function getCardElement(data) {
         .catch(console.error);
     }
   }
-  const likeBtnEl = postElement.querySelector('.card__like-btn');
-  likeBtnEl.addEventListener('click', (evt) => handleLikeCard(evt, data._id));
+  const likeBtn = postElement.querySelector('.card__like-btn');
+  likeBtn.addEventListener('click', (evt) => handleLikeCard(evt, data._id));
 
   //delete card
-  function handleDeleteCard() {
-    openModal(deleteModal);
-  }
+
   const deleteBtnEl = postElement.querySelector('.card__delete-btn');
-  deleteBtnEl.addEventListener('click', () => handleDeleteCard(data._id));
+  deleteBtnEl.addEventListener('click', () => {
+    openModal(deleteModal);
+    // postElement.remove();
+  });
+
+  function handleDeleteCard(postElement, datacard) {
+    selectedCard = postElement;
+    selectedCardId = datacard;
+    // openModal(deleteModal);
+  }
+  const deleteBtn = postElement.querySelector('.card__delete-btn');
+  deleteBtn.addEventListener('click', (evt) =>
+    handDeleteSubmit(postElement, data._id)
+  );
+  {
+    selectedCard = postElement;
+    selectedCardId = data._id;
+    handleDeleteCard();
+  }
 
   postImageEl.addEventListener('click', () => {
     previewPost.src = data.link;
+    previewPost.alt = data.name;
     previewCaption.alt = data.name;
     previewCaption.textContent = data.name;
     openModal(previewModal);
@@ -231,10 +252,11 @@ function handleEscape(evt) {
   }
 }
 
-// deleteSaveBtn.addEventListener('click', function () {
-//   handDeleteSubmit();
-//   closeModal(deleteModal);
-// });
+deleteSaveBtn.addEventListener('click', function () {
+  //remove post element and close modal
+  postElement.remove();
+  closeModal(deleteModal);
+});
 
 deleteCancelBtn.addEventListener('click', function () {
   closeModal(deleteModal);
@@ -246,7 +268,8 @@ function handDeleteSubmit(evt) {
 
   api
     .deleteCard(selectedCardId)
-    .then(() => {
+    .then((data) => {
+      selectedCard = data._id;
       selectedCard.remove();
       closeModal(deleteModal);
     })
