@@ -204,7 +204,7 @@ function getCardElement(data) {
   postImageEl.addEventListener('click', () => {
     previewPost.src = data.link;
     previewPost.alt = data.name;
-    previewCaption.alt = data.name;
+
     previewCaption.textContent = data.name;
     openModal(previewModal);
   });
@@ -271,12 +271,12 @@ function handDeleteSubmit(evt) {
     .then((data) => {
       selectedCard = data._id;
       selectedCard.remove();
+      disableButton(newPostSaveBtn, profileSaveBtn, avatarSaveBtn, settings);
       closeModal(deleteModal);
     })
     .catch(console.error)
     .finally(() => {
       setButtonText(deleteSaveBtn, false);
-      disableButton(newPostSaveBtn, profileSaveBtn, avatarSaveBtn, settings);
     });
 }
 
@@ -295,13 +295,13 @@ function handleEditProfileSubmit(evt) {
     .then((data) => {
       profileNameEl.textContent = data.name;
       profiledescriptionEl.textContent = data.about;
+      disableButton(newPostSaveBtn, profileSaveBtn, avatarSaveBtn, settings);
       closeModal(editProfileModal);
     })
     .catch(console.error)
     .finally(() => {
       setButtonText(submitBtn, false);
       // profileSaveBtn.textContent = 'Save';
-      disableButton(newPostSaveBtn, profileSaveBtn, avatarSaveBtn, settings);
     });
 }
 
@@ -317,13 +317,13 @@ function handleAddCardSubmit(evt) {
     .then((data) => {
       const postElement = getCardElement(data);
       postList.prepend(postElement);
+      disableButton(newPostSaveBtn, profileSaveBtn, avatarSaveBtn, settings);
       closeModal(newPostModal);
       newPostForm.reset();
     })
     .catch(console.error)
     .finally(() => {
       setButtonText(newPostSaveBtn, false);
-      disableButton(newPostSaveBtn, profileSaveBtn, avatarSaveBtn, settings);
     });
 }
 
@@ -337,13 +337,13 @@ function handleAvatarSubmit(evt) {
     })
     .then((data) => {
       profileimgEl.src = data.avatar;
+      disableButton(newPostSaveBtn, profileSaveBtn, avatarSaveBtn, settings);
       closeModal(avatarEditModal);
       avatarForm.reset();
     })
     .catch(console.error)
     .finally(() => {
       setButtonText(avatarSaveBtn, false);
-      disableButton(newPostSaveBtn, profileSaveBtn, avatarSaveBtn, settings);
     });
 }
 
