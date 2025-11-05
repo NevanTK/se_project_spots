@@ -47,7 +47,6 @@ const api = new Api({
   },
 });
 
-//destructure second item in call back of .then()
 api
   .getAppInfo()
   .then(([cards, userData]) => {
@@ -55,9 +54,6 @@ api
       const postElement = getCardElement(item);
       postList.append(postElement);
     });
-    //handle user info separately
-    //set src of avatr img
-    //set text conttent of both text elements
 
     profileimgEl.src = userData.avatar;
     profileNameEl.textContent = userData.name;
@@ -68,9 +64,10 @@ api
 const modals = document.querySelectorAll('.modal');
 const closeButtons = document.querySelectorAll('.modal__close-btn');
 const submitButtons = document.querySelectorAll('.modal__save-btn');
+
+//edit profile modal elements
 const editProfileModal = document.querySelector('#edit-profile-modal');
 const editProfileBtn = document.querySelector('.profile__edit-btn');
-// const profileCloseBtn = editProfileModal.querySelector(".modal__close-btn");
 const editProfileForm = editProfileModal.querySelector('.modal__form');
 const editProfileNameInput = editProfileModal.querySelector(
   '#profile-name-input'
@@ -82,23 +79,23 @@ const profileNameEl = document.querySelector('.profile__name');
 const profiledescriptionEl = document.querySelector('.profile__description');
 const profileSaveBtn = editProfileModal.querySelector('.modal__save-btn');
 
+//avatar edit modal elements
 const avatarEditModal = document.querySelector('#avatar-modal');
 const avatarEditBtn = document.querySelector('.profile__avatar-btn');
 const avatarForm = avatarEditModal.querySelector('.modal__form');
-// const avatarCloseBtn = avatarEditModal.querySelector(".modal__close-btn");
 const profileimgEl = document.querySelector('.profile__avatar');
 const avatarSaveBtn = avatarEditModal.querySelector('.modal__save-btn');
 const avatarInput = avatarEditModal.querySelector('#profile-avatar-input');
 
+//delete modal elements
 const deleteModal = document.querySelector('#delete-modal');
 const deleteForm = deleteModal.querySelector('.modal__form');
-//fix delete modal selectors
 const deleteCancelBtn = deleteModal.querySelector('#cancel');
 const deleteSaveBtn = deleteModal.querySelector('#confirm');
 
+//new post modal elements
 const newPostModal = document.querySelector('#new-post-modal');
 const newPostBtn = document.querySelector('.profile__post-btn');
-// const newPostCloseBtn = newPostModal.querySelector(".modal__close-btn");
 const newPostForm = newPostModal.querySelector('.modal__form');
 const newPostImageInput = newPostModal.querySelector('#card-image-input');
 const newPostDescriptionInput = newPostModal.querySelector(
@@ -106,11 +103,13 @@ const newPostDescriptionInput = newPostModal.querySelector(
 );
 const newPostSaveBtn = newPostModal.querySelector('.modal__save-btn');
 
+//preview modal elements
 const previewModal = document.querySelector('#preview-modal');
 const previewPost = previewModal.querySelector('.modal__image');
 // const previewCloseBtn = previewModal.querySelector(".modal__close-btn");
 const previewCaption = previewModal.querySelector('.modal__caption');
 
+//post elements
 const postImage = document.querySelector('.card__image');
 const postCaption = document.querySelector('.card__title');
 const postTemplate = document.querySelector('#post-template');
@@ -179,7 +178,6 @@ function getCardElement(data) {
   likeBtn.addEventListener('click', (evt) => handleLikeCard(evt, data._id));
 
   //delete card
-
   const deleteBtnEl = postElement.querySelector('.card__delete-btn');
   deleteBtnEl.addEventListener('click', () => {
     openModal(deleteModal);
@@ -189,7 +187,6 @@ function getCardElement(data) {
   function handleDeleteCard(postElement, datacard) {
     selectedCard = postElement;
     selectedCardId = datacard;
-    // openModal(deleteModal);
   }
   const deleteBtn = postElement.querySelector('.card__delete-btn');
   deleteBtn.addEventListener('click', (evt) =>
@@ -252,8 +249,8 @@ function handleEscape(evt) {
   }
 }
 
+//remove post element and close modal
 deleteSaveBtn.addEventListener('click', function () {
-  //remove post element and close modal
   postElement.remove();
   closeModal(deleteModal);
 });
@@ -261,7 +258,9 @@ deleteSaveBtn.addEventListener('click', function () {
 deleteCancelBtn.addEventListener('click', function () {
   closeModal(deleteModal);
 });
-//lading text for delete submit
+
+//loading text for delete submit should say "deleting", find in helpers.js may have fixed already but double check
+
 function handDeleteSubmit(evt) {
   evt.preventDefault();
   setButtonText(deleteSaveBtn, true);
@@ -284,7 +283,6 @@ function handleEditProfileSubmit(evt) {
   evt.preventDefault();
 
   const submitBtn = evt.submitter;
-  // submitBtn.textContent = 'Saving...';
   setButtonText(submitBtn, true);
 
   api
@@ -301,7 +299,6 @@ function handleEditProfileSubmit(evt) {
     .catch(console.error)
     .finally(() => {
       setButtonText(submitBtn, false);
-      // profileSaveBtn.textContent = 'Save';
     });
 }
 

@@ -203,6 +203,9 @@
   opacity: 0.8;
 }
 
+/* Responsive styles */
+/* Need to fix .delete-modal__button-group */
+
 @media screen and (max-width: 627px) {
   .modal__close-btn {
     top: 22px;
