@@ -6,7 +6,7 @@ import {
   settings,
 } from '../scripts/validation.js';
 import Api from '../utils/Api.js';
-import { setButtonText } from '../utils/helpers.js';
+import { setButtonText, setDeleteButtonText } from '../utils/helpers.js';
 
 // const initialCards = [
 //   {
@@ -139,10 +139,10 @@ function getCardElement(data) {
   postTitleEl.alt = data.name;
   postTitleEl.textContent = data.name;
 
-  const likeBtnEl = postElement.querySelector('.card__like-btn');
-  likeBtnEl.addEventListener('click', () => {
-    likeBtnEl.classList.toggle('card__like-btn_active');
-  });
+  // const likeBtnEl = postElement.querySelector('.card__like-btn');
+  // likeBtnEl.addEventListener('click', () => {
+  //   likeBtnEl.classList.toggle('card__like-btn_active');
+  // });
 
   api.getUserInfo().then((userData) => {
     if (data.likes.some((like) => like._id === userData._id)) {
@@ -192,6 +192,12 @@ function getCardElement(data) {
   deleteBtn.addEventListener('click', (evt) =>
     handDeleteSubmit(postElement, data._id)
   );
+
+  deleteSaveBtn.addEventListener('click', function () {
+    postElement.remove();
+    closeModal(deleteModal);
+  });
+
   {
     selectedCard = postElement;
     selectedCardId = data._id;
@@ -250,10 +256,6 @@ function handleEscape(evt) {
 }
 
 //remove post element and close modal
-deleteSaveBtn.addEventListener('click', function () {
-  postElement.remove();
-  closeModal(deleteModal);
-});
 
 deleteCancelBtn.addEventListener('click', function () {
   closeModal(deleteModal);
@@ -263,7 +265,7 @@ deleteCancelBtn.addEventListener('click', function () {
 
 function handDeleteSubmit(evt) {
   evt.preventDefault();
-  setButtonText(deleteSaveBtn, true);
+  setDeleteButtonText(deleteSaveBtn, true);
 
   api
     .deleteCard(selectedCardId)
